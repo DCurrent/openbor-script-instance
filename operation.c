@@ -28,7 +28,7 @@ void dc_instance_set(char instance_key, int value)
 //
 // Clears the current instance, effectively resetting
 // all values to their defaults.
-void dc_instance_reset(char instance_key)
+void dc_instance_reset(char base_id, char instance_key, int the_end)
 {
 	int instance;
 
@@ -36,7 +36,7 @@ void dc_instance_reset(char instance_key)
 	instance = dc_instance_get(instance_key);
 
 	// Destroy all instance variables.
-	dc_instance_free();
+	dc_instance_free(base_id, instance_key, the_end);
 
 	// If the instance ID isn't default, then restore 
 	// it to memory. Either way we now have a clean
@@ -52,7 +52,7 @@ void dc_instance_reset(char instance_key)
 //
 // Destroy the current instance by deleting all
 // library variables.
-void dc_instance_free(char instance_key, int the_end)
+void dc_instance_free(char base_id, char instance_key, int the_end)
 {
 	int instance;
 	int i;
@@ -65,7 +65,7 @@ void dc_instance_free(char instance_key, int the_end)
 	for (i = 0; i < the_end; i++)
 	{
 		// Concatenate the variable ID.
-		id = instance + instance_key + i;
+		id = instance + base_id + i;
 
 		// Delete variable.
 		setlocalvar(id, NULL());
@@ -76,7 +76,7 @@ void dc_instance_free(char instance_key, int the_end)
 // 2018-11-22
 //
 // Send all library variables to log for debugging.
-void dc_instance_dump(char instance_key, int the_end)
+void dc_instance_dump(char base_id, char instance_key, int the_end)
 {
 	int instance;
 	int i;
@@ -93,7 +93,7 @@ void dc_instance_dump(char instance_key, int the_end)
 	for (i = 0; i < the_end; i++)
 	{
 		// Concatenate the variable ID.
-		id = instance + instance_key + i;
+		id = instance + base_id + i;
 
 		// Log ID.
 		log("\n\t " + id + ": ");
