@@ -86,7 +86,7 @@ void dc_instance_dump(char base_id, char instance_key, int the_end)
 	instance = dc_instance_get(instance_key);
 
 	// Log base name and instance.
-	log("\n\n " + instance_key + " dump:");
+	log("\n\n " + base_id + " dump:");
 	log("\n\t " + "Instance: " + instance);
 
 	// Loop from 0 to end count of instance variables.
@@ -96,7 +96,7 @@ void dc_instance_dump(char base_id, char instance_key, int the_end)
 		id = instance + base_id + i;
 
 		// Log ID.
-		log("\n\t " + id + ": ");
+		log("\n\t " + id + ": \t");
 
 		// Log value.
 		log(getlocalvar(id));
