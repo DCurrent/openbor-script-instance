@@ -22,6 +22,10 @@ None
 
 Note these examples are for the [DC D20 Library](https://github.com/DCurrent/openbor-script-D20). Each library will have its own instance control macros. In most cases it's just the library name as a prefix. See each library's config.h file.
 
+### Local
+
+Standard operation. The library will use these functions to instance its local vars.
+
 Get active instance ID.
 ```c
 int i = dc_d20_get_instance();
@@ -47,4 +51,23 @@ dc_d20_reset_instance();
 Dump the active instance. All variables for the active instance are sent to the log for debugging.
 ```c
 dc_d20_reset_instance();
+```
+
+### Global
+
+My series of libraries relies primary on local variables, making them behave almost exactly like class members in object-oriented programing. Local variables are automatically destroyed when the script unloads, eliminating any need for cleanup or possible memory leaks. However, there may be cases where data needs to pass between scripts. In that case, there is no need to muck up a library or script with global variables. Instead, use these export and import functions to package up the entire library's member data and retrieve it elsewhere.
+
+Export the library data. A global copy of the libraries member variables will be created, identified by the current instance.
+```c
+dc_d20_export_instance();
+```
+
+Import data from an export instance matching the current instance. Local members are overwritten. If there is no global copy of the current instance, the current instance will be overwritten with blank values (same effect as an instance reset).
+```c
+dc_d20_import_instance();
+```
+
+Destroy an export instance matching the current instance. Since global data is never deleted automatically, it is best practice to run this function after you are finished with the export copy.
+```c
+dc_d20_free_export();
 ```
