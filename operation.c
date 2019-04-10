@@ -3,7 +3,7 @@
 // Which instance is in use?
 int dc_instance_get(char instance_key)
 {
-	void result = getlocalvar(base_id);
+	void result = getlocalvar(instance_key);
 
 	if (!result)
 	{
