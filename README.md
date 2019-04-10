@@ -27,7 +27,7 @@ Get active instance ID.
 int i = dc_d20_get_instance();
 ```
 
-Set (switch to) active instance, or create an instance with the supplied ID if one is not already present.
+Set (switch to) instance with supplied ID. If the requested instance does not exist, it will be created first.
 ```c
 int i = {int};
 
