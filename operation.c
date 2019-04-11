@@ -78,6 +78,7 @@ void dc_instance_free(char base_id, char instance_key, int the_end)
 // Send all library variables to log for debugging.
 void dc_instance_dump(char base_id, char instance_key, int the_end)
 {
+	
 	int instance;
 	int i;
 	char id;
