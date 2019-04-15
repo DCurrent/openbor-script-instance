@@ -1,9 +1,9 @@
 #include "data/scripts/dc_instance/config.h"
 
 // Which instance is in use?
-int dc_instance_get(char instance_key)
+char dc_instance_get(char instance_key)
 {
-	void result = getlocalvar(instance_key);
+	char result = getlocalvar(instance_key);
 
 	if (!result)
 	{
@@ -13,7 +13,7 @@ int dc_instance_get(char instance_key)
 	return result;
 }
 
-void dc_instance_set(char instance_key, int value)
+void dc_instance_set(char instance_key, char value)
 {
 	if (value == DC_INSTANCE_DEFAULT_INSTANCE)
 	{
@@ -21,6 +21,15 @@ void dc_instance_set(char instance_key, int value)
 	}
 
 	setlocalvar(instance_key, value);
+}
+
+// Use whe sending instance id to dependency, so that the dependency's 
+// instance is unique to the library that calls it.
+char dc_instance_dependency_get(char base_id, char instance_key)
+{
+	int result;
+
+	result = base_id + dc_instance_get(instance_key);
 }
 
 // Caskey, Damon V.
