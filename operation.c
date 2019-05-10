@@ -3,7 +3,17 @@
 // Which instance is in use?
 char dc_instance_get(char instance_key)
 {
-	char result = getlocalvar(instance_key);
+	char result;
+
+	// If there's no key, getlocalvar fails. Catch that here 
+	// and use a default.
+	if (typeof(instance_key) == openborconstant("VT_EMPTY"))
+	{
+		return DC_INSTANCE_DEFAULT_INSTANCE;
+	}
+
+	// Get the result. If it's blank, return default instance.
+	result = getlocalvar(instance_key);
 
 	if (!result)
 	{
@@ -87,7 +97,8 @@ void dc_instance_free(char base_id, char instance_key, int the_end)
 // Send all library variables to log for debugging.
 void dc_instance_dump(char base_id, char instance_key, int the_end)
 {
-	
+	log("\n dc_instance_dump: " + base_id + ", " + instance_key + ", " + the_end);
+
 	int instance;
 	int i;
 	char id;
